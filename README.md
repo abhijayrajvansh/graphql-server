@@ -1,3 +1,3 @@
-# prisma-graphql-server
+# Prisma GraphQL Server
 
-author: abhijayrajvansh
+author: [Abhijay Rajvansh](https://abhijayrajvansh.com)
