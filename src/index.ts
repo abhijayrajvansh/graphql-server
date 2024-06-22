@@ -25,10 +25,15 @@ async function startServer() {
 
   await gqlServer.start();
 
+  // **root**
   app.get("/", (req, res) => {
-    res.json({ msg: "server is up and running" });
+    res.json({ 
+      status: "server is up and running",
+      graphql_studio: "/graphql"
+    });
   });
 
+  // **graphql endpoint**
   app.use("/graphql", expressMiddleware(gqlServer));
 
   app.listen(PORT, () => {
