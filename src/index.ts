@@ -9,12 +9,14 @@ async function startServer() {
   app.use(express.json());
 
   const gqlServer = new ApolloServer({
+    // schema layer
     typeDefs: `
       type Query {
         hello: String
         say(name: String): String
       }
     `,
+    // actual function that executes
     resolvers: {
       Query: {
         hello: () => `hello from graphql!`,
