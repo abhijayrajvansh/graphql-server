@@ -2,6 +2,10 @@
 
 author: [Abhijay Rajvansh](https://abhijayrajvansh.com)
 
-## Architecture
+## Tech Stack
 
-TBW ... 
+- Node.js
+- Express.js
+- Apollo GraphQL
+- Postgres
+- Docker
