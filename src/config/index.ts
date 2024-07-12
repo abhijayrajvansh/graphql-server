@@ -2,4 +2,4 @@ import { config } from "dotenv";
 
 config();
 
-export const PORT = process.env.PORT;
+export const PORT = Number(process.env.PORT) || 8000
