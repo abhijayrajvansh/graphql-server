@@ -1,15 +1,15 @@
 import express from "express";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
+import { PORT } from "./config";
 
 async function startServer() {
-  const PORT = process.env.PORT || 2711;
   const app = express();
 
   app.use(express.json());
 
   const gqlServer = new ApolloServer({
-    typeDefs:`
+    typeDefs: `
       type Query {
         hello: String
         say(name: String): String
@@ -18,7 +18,7 @@ async function startServer() {
     resolvers: {
       Query: {
         hello: () => `hello from graphql!`,
-        say: (_, {name}: {name: String}) => `hello ${name}, how are you?` 
+        say: (_, { name }: { name: String }) => `hello ${name}, how are you?`,
       },
     },
   });
@@ -27,9 +27,9 @@ async function startServer() {
 
   // **root**
   app.get("/", (req, res) => {
-    res.json({ 
+    res.json({
       status: "server is up and running",
-      graphql_studio: "/graphql"
+      graphql_studio: "/graphql",
     });
   });
 
