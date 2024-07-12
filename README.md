@@ -9,3 +9,4 @@ author: [Abhijay Rajvansh](https://abhijayrajvansh.com)
 - Apollo GraphQL
 - Postgres
 - Docker
+- Prisma
