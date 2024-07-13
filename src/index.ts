@@ -2,6 +2,7 @@ import express from "express";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { PORT } from "./config";
+import gql from 'graphql-tag'
 
 async function startServer() {
   const app = express();
@@ -10,7 +11,7 @@ async function startServer() {
 
   const gqlServer = new ApolloServer({
     // schema layer
-    typeDefs: `
+    typeDefs: gql`
       type Query {
         hello: String
         say(name: String): String

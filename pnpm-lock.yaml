@@ -20,6 +20,9 @@ dependencies:
   graphql:
     specifier: ^16.8.2
     version: 16.8.2
+  graphql-tag:
+    specifier: ^2.12.6
+    version: 2.12.6(graphql@16.8.2)
 
 devDependencies:
   tsc-watch:
@@ -661,6 +664,16 @@ packages:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
     dependencies:
       get-intrinsic: 1.2.4
+    dev: false
+
+  /graphql-tag@2.12.6(graphql@16.8.2):
+    resolution: {integrity: sha512-FdSNcu2QQcWnM2VNvSCCDCVS5PpPqpzgFT8+GXzqJuoDd0CBncxCY278u4mhRO7tMgo2JjgJA5aZ+nWSQ/Z+xg==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      graphql: ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+    dependencies:
+      graphql: 16.8.2
+      tslib: 2.6.3
     dev: false
 
   /graphql@16.8.2:
