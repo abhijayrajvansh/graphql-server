@@ -2,7 +2,8 @@ import express from "express";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { PORT } from "./config";
-import gql from 'graphql-tag'
+import gql from "graphql-tag";
+import { prisma } from "./db";
 
 async function startServer() {
   const app = express();
@@ -16,12 +17,47 @@ async function startServer() {
         hello: String
         say(name: String): String
       }
+      type Mutation {
+        createUser(
+          firstName: String!
+          lastName: String!
+          email: String!
+          password: String!
+        ): Boolean
+      }
     `,
     // actual function that executes
     resolvers: {
       Query: {
         hello: () => `hello from graphql!`,
-        say: (_, { name }: { name: String }) => `hello ${name}, how are you?`,
+        say: (_, { name }: { name: string }) => `hello ${name}, how are you?`,
+      },
+      Mutation: {
+        createUser: async (
+          _,
+          {
+            firstName,
+            lastName,
+            email,
+            password,
+          }: {
+            firstName: string;
+            lastName: string;
+            email: string;
+            password: string;
+          }
+        ) => {
+          await prisma.user.create({
+            data: {
+              email,
+              password,
+              firstName,
+              lastName,
+              salt: "random_salt", // will be using bcrypt.js for salt and hashed password
+            },
+          });
+          return true;
+        },
       },
     },
   });

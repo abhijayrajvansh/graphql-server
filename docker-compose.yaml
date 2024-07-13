@@ -1,7 +1,8 @@
+
 services: 
   postgres:
-    container_name: backend-db
     image: postgres
+    container_name: docker-postgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
