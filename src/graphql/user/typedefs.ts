@@ -1,6 +1,14 @@
+export const userTypeDef = `#graphql
+  type User {
+    id: ID!
+    email: String!
+    profileImageUrl: String
+  }
+`
 const queries = `#graphql
   hello: String
   loginUser(email: String!, password: String!): String
+  getCurrentLoggedInUser: User
 `;
 
 const mutations = `#graphql

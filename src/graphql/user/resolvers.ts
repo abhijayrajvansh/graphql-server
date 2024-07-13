@@ -4,7 +4,11 @@ const queries = {
   hello: () => "hello from graphql",
   loginUser: async (_: any, payload:LoginUserPayload) => {
     const res = loginUser(payload)
-    return res
+    return res;
+  },
+  getCurrentLoggedInUser: async (_:any, params: any, context: any) => {
+    if (context && context.user) return context.user
+    throw new Error("access denied")
   }
 };
 

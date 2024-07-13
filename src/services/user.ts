@@ -1,6 +1,6 @@
 import { prisma } from "../db";
 import { hash, compare } from "bcrypt";
-import { sign } from "jsonwebtoken";
+import { sign, verify } from "jsonwebtoken";
 import { AUTH_SECRET } from "../config";
 
 export interface RegisterUserPayload {
@@ -27,6 +27,8 @@ export const registerUser = async (payload: RegisterUserPayload) => {
   return newUser;
 };
 
+
+
 export const loginUser = async (payload: LoginUserPayload) => {
   const { email, password } = payload;
 
@@ -41,6 +43,10 @@ export const loginUser = async (payload: LoginUserPayload) => {
     email: isUser.email,
   };
 
-  const token = sign({ id: isUser.id, email: isUser.email }, AUTH_SECRET);
+  const token = sign(userIdentity, AUTH_SECRET);
   return token;
+};
+
+export const decodeToken = (token: string) => {
+  return verify(token, AUTH_SECRET) as {id: string, email: string};
 };

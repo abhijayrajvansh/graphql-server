@@ -2,6 +2,7 @@ import createApolloGraphqlServer from "./graphql";
 import express from "express";
 import { expressMiddleware } from "@apollo/server/express4";
 import { PORT } from "./config";
+import { decodeToken } from "./services/user";
 
 async function startServer() {
   const app = express();
@@ -17,7 +18,20 @@ async function startServer() {
   });
 
   // graphql endpoint
-  app.use("/graphql", expressMiddleware(await createApolloGraphqlServer()));
+  app.use(
+    "/graphql",
+    expressMiddleware(await createApolloGraphqlServer(), {
+      context: async ({ req }) => {
+        const tokenFromHeaders = req.headers.authorization;
+        try {
+          const user = decodeToken(tokenFromHeaders);
+          return { user };
+        } catch (error) {
+          return {};
+        }
+      },
+    })
+  );
 
   app.listen(PORT, () => {
     console.log(
