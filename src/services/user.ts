@@ -1,7 +1,14 @@
 import { prisma } from "../db";
-import { hash } from "bcrypt";
+import { hash, compare } from "bcrypt";
+import { sign } from "jsonwebtoken";
+import { AUTH_SECRET } from "../config";
 
 export interface RegisterUserPayload {
+  email: string;
+  password: string;
+}
+
+export interface LoginUserPayload {
   email: string;
   password: string;
 }
@@ -10,7 +17,7 @@ export const registerUser = async (payload: RegisterUserPayload) => {
   const { email, password } = payload;
   const saltRounds = 10;
   const hashedPassword = await hash(password, saltRounds);
-  
+
   const newUser = await prisma.user.create({
     data: {
       email,
@@ -20,4 +27,15 @@ export const registerUser = async (payload: RegisterUserPayload) => {
   return newUser;
 };
 
-// login user
+export const loginUser = async (payload: LoginUserPayload) => {
+  const { email, password } = payload;
+
+  const isUser = await prisma.user.findUnique({ where: { email } });
+  if (!isUser) throw new Error ("user not found")
+
+  const isValidPassword = await compare(password, isUser.password);
+  if (!isValidPassword) throw new Error ("wrong password")
+
+  const token = sign(payload, AUTH_SECRET);
+  return token;
+};
