@@ -24,8 +24,8 @@ async function startServer() {
       context: async ({ req }) => {
         const tokenFromHeaders = req.headers.authorization;
         try {
-          const user = decodeToken(tokenFromHeaders);
-          return { user };
+          const userIdentity = decodeToken(tokenFromHeaders);
+          return { userIdentity };
         } catch (error) {
           return {};
         }

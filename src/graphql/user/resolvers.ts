@@ -1,4 +1,4 @@
-import { LoginUserPayload, RegisterUserPayload, loginUser, registerUser } from "../../services/user";
+import { LoginUserPayload, RegisterUserPayload, getUserById, loginUser, registerUser } from "../../services/user";
 
 const queries = {
   hello: () => "hello from graphql",
@@ -7,7 +7,11 @@ const queries = {
     return res;
   },
   getCurrentLoggedInUser: async (_:any, params: any, context: any) => {
-    if (context && context.user) return context.user
+    if (context && context.userIdentity) {
+      const userId =  context.userIdentity.id;
+      const user = getUserById(userId);
+      return user;
+    }
     throw new Error("access denied")
   }
 };

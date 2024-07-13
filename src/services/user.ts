@@ -13,6 +13,10 @@ export interface LoginUserPayload {
   password: string;
 }
 
+export const getUserById = async (id: string) => {
+  return await prisma.user.findUnique({ where: { id } });
+};
+
 export const registerUser = async (payload: RegisterUserPayload) => {
   const { email, password } = payload;
   const saltRounds = 10;
@@ -26,8 +30,6 @@ export const registerUser = async (payload: RegisterUserPayload) => {
   });
   return newUser;
 };
-
-
 
 export const loginUser = async (payload: LoginUserPayload) => {
   const { email, password } = payload;
@@ -48,5 +50,5 @@ export const loginUser = async (payload: LoginUserPayload) => {
 };
 
 export const decodeToken = (token: string) => {
-  return verify(token, AUTH_SECRET) as {id: string, email: string};
+  return verify(token, AUTH_SECRET) as { id: string; email: string };
 };
