@@ -21,7 +21,7 @@ async function startServer() {
 
   app.listen(PORT, () => {
     console.log(
-      `> server started on PORT:${PORT}\n> Graphql-Studio is live at http://localhost:${PORT}/graphql.`
+      `> server started on PORT:${PORT}\n> Graphql-Studio is live at http://localhost:${PORT}/graphql`
     );
   });
 }
