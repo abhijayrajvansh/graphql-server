@@ -31,11 +31,16 @@ export const loginUser = async (payload: LoginUserPayload) => {
   const { email, password } = payload;
 
   const isUser = await prisma.user.findUnique({ where: { email } });
-  if (!isUser) throw new Error ("user not found")
+  if (!isUser) throw new Error("user not found");
 
   const isValidPassword = await compare(password, isUser.password);
-  if (!isValidPassword) throw new Error ("wrong password")
+  if (!isValidPassword) throw new Error("wrong password");
 
-  const token = sign(payload, AUTH_SECRET);
+  const userIdentity = {
+    id: isUser.id,
+    email: isUser.email,
+  };
+
+  const token = sign({ id: isUser.id, email: isUser.email }, AUTH_SECRET);
   return token;
 };
